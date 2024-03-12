@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="historial_clinico_consultas" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<subDataset name="consultas">
+		<queryString language="SQL">
+			<![CDATA[select @rownum:=@rownum-1 as n,date(fecha) as fecha,descripcion,diagnostico,tratamiento,receta
+from (select @rownum:=4) t,consultas t1 where id_paciente=19 and estado=1
+order by fecha_registro desc]]>
+		</queryString>
+		<field name="n" class="java.lang.Double"/>
+		<field name="fecha" class="java.sql.Date"/>
+		<field name="descripcion" class="java.lang.String"/>
+		<field name="diagnostico" class="java.lang.String"/>
+		<field name="tratamiento" class="java.lang.String"/>
+		<field name="receta" class="java.lang.String"/>
+	</subDataset>
+	<subDataset name="dataset1"/>
+	<subDataset name="dataset2"/>
+	<parameter name="idPaciente" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select @rownum:=@rownum-1 as n,date(fecha) as fecha,descripcion,cuadro_clinico,
+ifnull(examenes_complementarios,'') as examenes_complementarios,diagnostico,tratamiento
+from (select @rownum:=4) t,consultas t1 where id_paciente=$P{idPaciente} and estado=1
+order by fecha_registro desc]]>
+	</queryString>
+	<field name="n" class="java.lang.Double"/>
+	<field name="fecha" class="java.sql.Date"/>
+	<field name="descripcion" class="java.lang.String"/>
+	<field name="cuadro_clinico" class="java.lang.String"/>
+	<field name="examenes_complementarios" class="java.lang.String"/>
+	<field name="diagnostico" class="java.lang.String"/>
+	<field name="tratamiento" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="33" splitType="Stretch">
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="13" width="100" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha]]></text>
+			</staticText>
+			<textField>
+				<reportElement stretchType="RelativeToBandHeight" x="100" y="13" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{fecha}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="4" width="512" height="1"/>
+			</line>
+		</band>
+		<band height="23">
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="100" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Motivo]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="100" y="0" width="412" height="21"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{descripcion}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="26">
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="100" y="0" width="412" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{cuadro_clinico}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cuadro clínico]]></text>
+			</staticText>
+		</band>
+		<band height="36">
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="31"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Exámenes complementarios]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="100" y="0" width="412" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{examenes_complementarios}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="27">
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="100" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Diagnóstico]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="100" y="0" width="412" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{diagnostico}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="26">
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="100" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tratamiento]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="100" y="0" width="412" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{tratamiento}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

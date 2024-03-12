@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="historial_clinico" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<subDataset name="consultas">
+		<queryString language="SQL">
+			<![CDATA[select @rownum:=@rownum-1 as n,date(fecha) as fecha,descripcion,diagnostico,tratamiento,receta
+from (select @rownum:=4) t,consultas t1 where id_paciente=19 and estado=1
+order by fecha_registro desc]]>
+		</queryString>
+		<field name="n" class="java.lang.Double"/>
+		<field name="fecha" class="java.sql.Date"/>
+		<field name="descripcion" class="java.lang.String"/>
+		<field name="diagnostico" class="java.lang.String"/>
+		<field name="tratamiento" class="java.lang.String"/>
+		<field name="receta" class="java.lang.String"/>
+	</subDataset>
+	<subDataset name="dataset1"/>
+	<subDataset name="dataset2"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["/reportes/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="idPaciente" class="java.lang.String"/>
+	<parameter name="imagen" class="java.io.InputStream"/>
+	<parameter name="subReport" class="java.io.InputStream"/>
+	<queryString>
+		<![CDATA[select nombres,apellidos,sexo,timestampdiff(year,fecha_nacimiento,now()) as edad,
+ifnull(domicilio,'') as domicilio,ifnull(telefono,'') as telefono,
+ifnull(estado_civil,'') as estado_civil,ifnull(antecedentes_pp,'') as antecedentes_pp
+from pacientes
+where id=$P{idPaciente} and estado=1]]>
+	</queryString>
+	<field name="nombres" class="java.lang.String"/>
+	<field name="apellidos" class="java.lang.String"/>
+	<field name="sexo" class="java.lang.String"/>
+	<field name="edad" class="java.lang.Long"/>
+	<field name="domicilio" class="java.lang.String"/>
+	<field name="telefono" class="java.lang.String"/>
+	<field name="estado_civil" class="java.lang.String"/>
+	<field name="antecedentes_pp" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="172" splitType="Stretch">
+			<line>
+				<reportElement x="3" y="163" width="549" height="1" forecolor="#CCCCFF"/>
+				<graphicElement>
+					<pen lineWidth="2.0"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="110" y="39" width="374" height="20" forecolor="#2F4170"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MEDICINA GENERAL Y CIRUGÍA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="110" y="110" width="374" height="17" forecolor="#0066CC"/>
+				<textElement textAlignment="Center">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[PSICOSOCIOLOGÍA LABORAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="92" y="59" width="431" height="31" forecolor="#3366FF"/>
+				<textElement textAlignment="Center">
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[ATENCIÓN DE ENFERMEDADES EN NIÑOS, ADULTOS Y ADULTO MAYOR
+EX RESIDENTE HOSPITAL ONCOLÓGICO SOLCA PORTOVIEJO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="110" y="10" width="374" height="29" forecolor="#2F4170"/>
+				<textElement textAlignment="Center">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Dr. Juan Luis Ávila Vera]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="110" y="90" width="374" height="20" forecolor="#FF0033"/>
+				<textElement textAlignment="Center">
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[MÁSTER EN PREVENCIÓN DE RIESGOS LABORALES]]></text>
+			</staticText>
+			<image hAlign="Center">
+				<reportElement x="10" y="57" width="70" height="100"/>
+				<imageExpression class="java.io.InputStream"><![CDATA[$P{imagen}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="110" y="127" width="374" height="31" forecolor="#0066CC"/>
+				<textElement textAlignment="Center">
+					<font size="10" isItalic="true"/>
+				</textElement>
+				<text><![CDATA["EL BUEN MÉDICO TRATA LA ENFERMEDAD; EL GRAN MÉDICO TRATA AL PACIENTE QUE TIENE LA ENFERMEDAD"]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="180" splitType="Stretch">
+			<staticText>
+				<reportElement x="2" y="0" width="553" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[HISTORIAL CLÍNICO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="31" width="223" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[DATOS PERSONALES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="61" width="100" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombres:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="81" width="100" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Apellidos:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="293" y="61" width="100" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sexo:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="293" y="81" width="100" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Edad:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="101" width="100" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Estado civil:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="121" width="100" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Domicilio:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="153" width="100" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Antecedentes:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="100" y="61" width="173" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{nombres}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="81" width="173" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{apellidos}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="101" width="173" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{estado_civil}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="393" y="61" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{sexo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="393" y="81" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$F{edad}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="102" y="121" width="391" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{domicilio}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="102" y="153" width="391" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{antecedentes_pp}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="293" y="101" width="100" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Teléfono:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="393" y="101" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{telefono}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="27">
+			<staticText>
+				<reportElement x="2" y="7" width="553" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[CONSULTAS]]></text>
+			</staticText>
+		</band>
+		<band height="101">
+			<subreport>
+				<reportElement stretchType="RelativeToBandHeight" x="2" y="0" width="553" height="100"/>
+				<subreportParameter name="idPaciente">
+					<subreportParameterExpression><![CDATA[$P{idPaciente}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression class="java.io.InputStream"><![CDATA[$P{subReport}]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="112">
+			<line>
+				<reportElement x="189" y="71" width="177" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="189" y="82" width="177" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Dr. Juan Luis Ávila Vera]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="63" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="39" width="555" height="20" forecolor="#0066CC"/>
+				<textElement textAlignment="Center" markup="styled"/>
+				<textFieldExpression class="java.lang.String"><![CDATA["<style isBold='true'>"+"Teléfono: 0981767828 - (05)2658226 Email: " + "</style>juanavilavera2012@hotmail.com"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1" y="21" width="555" height="18" forecolor="#0066CC"/>
+				<textElement textAlignment="Center" markup="styled"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[" <style isBold='true'>"+"Dirección: " + "</style>Vía Crucita Km 5 1/2 sector El Tomate"]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="4" y="10" width="549" height="1" forecolor="#CCCCFF"/>
+				<graphicElement>
+					<pen lineWidth="2.0"/>
+				</graphicElement>
+			</line>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
